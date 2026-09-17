@@ -307,6 +307,7 @@ The final output is a dynamically generated Purchase Order PDF created using SAP
 
 <img width="691" height="889" alt="image (1)" src="https://github.com/user-attachments/assets/7386d272-43b2-4582-9699-9dc669f95710" />
 
+
 <br><br>
 
 <b>Generated Purchase Order PDF</b>
