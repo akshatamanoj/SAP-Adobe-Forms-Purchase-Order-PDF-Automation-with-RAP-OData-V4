@@ -461,17 +461,3 @@ or sensitive production data should be included in this repository.
 📌 SAP ABAP | RAP | OData V4 | Adobe Forms | CDS | ABAP OO
 </p>
 
-<p>
-🔗 <b>GitHub:</b>
-<a href="https://github.com/akshatamanoj">akshatamanoj</a>
-</p>
-
-<br>
-
-⭐ <b>If you find this project useful, feel free to explore the repository.</b>
-
-</div>
-
-Adobe Form Interface
-
-<img width="1919" height="1143" alt="image" src="https://github.com/user-attachments/assets/b7690a82-b0ad-456d-aa6b-b9dd9d4a8340" />
