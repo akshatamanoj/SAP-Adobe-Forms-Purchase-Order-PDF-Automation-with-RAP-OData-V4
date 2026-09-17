@@ -1,0 +1,103 @@
+CLASS zcl_po_pdf_stream_handler DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES if_rap_query_provider.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zcl_po_pdf_stream_handler IMPLEMENTATION.
+
+  METHOD if_rap_query_provider~select.
+    TRY.
+        " 1. Get the requested Purchase Order ID from the OData filter/key context
+        DATA(lt_filter_cond) = io_request->get_filter( )->get_as_ranges( ).
+
+        " Read the range table for the PurchaseOrder field safely
+        ASSIGN lt_filter_cond[ name = 'PURCHASEORDER' ] TO FIELD-SYMBOL(<ls_filter>).
+        IF sy-subrc <> 0.
+          RETURN.
+        ENDIF.
+
+        DATA(lt_range_tab) = <ls_filter>-range.
+        READ TABLE lt_range_tab INTO DATA(ls_range_val) INDEX 1.
+        IF sy-subrc <> 0.
+          RETURN.
+        ENDIF.
+
+        DATA(lv_ebeln) = CONV ebeln( ls_range_val-low ).
+
+        IF lv_ebeln IS INITIAL.
+          RETURN.
+        ENDIF.
+
+        " 2. Fetch data from your header & item CDS views
+        SELECT SINGLE * FROM ZCD_PO_HEADER11 WHERE PurchaseOrder = @lv_ebeln INTO @DATA(ls_header).
+        SELECT * FROM ZI_AK_PO_ITEM WHERE PurchaseOrder = @lv_ebeln INTO TABLE @DATA(lt_items).
+
+        " 3. Call the Adobe Form layout control engines
+        DATA: ls_outputparams TYPE sfpoutputparams,
+              ls_docparams    TYPE sfpdocparams,
+              ls_pdf_output   TYPE fpformoutput,
+              lv_fm_name      TYPE funcname.
+
+        " Intercept the PDF byte stream in memory instead of spooling to a physical printer
+        ls_outputparams-getpdf   = abap_true.
+        ls_outputparams-nodialog = abap_true.
+
+        CALL FUNCTION 'FP_JOB_OPEN'
+          CHANGING
+            c_outputparams = ls_outputparams
+          EXCEPTIONS
+            OTHERS         = 1.
+
+        " Resolve the technical generated function module name for your Adobe Form layout
+        CALL FUNCTION 'FP_FUNCTION_MODULE_NAME'
+          EXPORTING
+            i_name          = 'ZSMART_PO' " Your Adobe Form Name
+          IMPORTING
+            e_interfaceName = lv_fm_name
+          EXCEPTIONS
+            OTHERS          = 1.
+
+        " Execute the form function module, passing your application structured data sets
+        CALL FUNCTION lv_fm_name
+          EXPORTING
+            /1bcdwb/docparams  = ls_docparams
+            is_header          = ls_header
+            it_item            = lt_items
+          IMPORTING
+            /1bcdwb/formoutput = ls_pdf_output
+          EXCEPTIONS
+            OTHERS             = 1.
+
+        CALL FUNCTION 'FP_JOB_CLOSE'
+          EXCEPTIONS
+            OTHERS = 1.
+
+            " 4. Construct the output entity record matching ZC_PO_PDF
+        DATA: lt_result TYPE TABLE OF ZC_PO_PDF,
+              ls_result TYPE ZC_PO_PDF.
+
+        ls_result-PurchaseOrder = lv_ebeln.
+        ls_result-MimeType      = 'application/pdf'.
+        ls_result-FileName      = |PO_{ lv_ebeln }.pdf|.
+
+        " FIXED: Changed field name to match ZC_PO_PDF entity specification
+        ls_result-Content       = ls_pdf_output-pdf.
+
+        APPEND ls_result TO lt_result.
+
+        io_response->set_data( lt_result ).
+
+      CATCH cx_root INTO DATA(lx_root).
+        " Handle exception processing routines
+    ENDTRY.
+  ENDMETHOD.
+
+ENDCLASS.

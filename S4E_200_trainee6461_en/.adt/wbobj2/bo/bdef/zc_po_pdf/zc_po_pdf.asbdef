@@ -1,0 +1,9 @@
+unmanaged implementation in class zbp_c_po_pdf unique;
+strict(2);
+
+define behavior for ZC_PO_PDF alias PO_PDF
+authorization master ( global )
+lock master
+{
+  field ( readonly ) PurchaseOrder;
+}

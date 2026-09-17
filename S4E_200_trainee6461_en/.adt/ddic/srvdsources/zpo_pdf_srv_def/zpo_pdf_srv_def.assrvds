@@ -1,0 +1,4 @@
+@EndUserText.label: 'PO PDF Service'
+define service ZPO_PDF_SRV_DEF {
+  expose ZC_PO_PDF;
+}

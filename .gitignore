@@ -1,0 +1,12 @@
+# Eclipse / SAP project metadata
+.project
+.settings/
+.wingui
+
+# SAP connection / destination configuration
+.destination.properties
+.destination.http.properties
+.destination.http.domain.properties
+
+# Temporary files
+%tmp%/
