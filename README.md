@@ -225,11 +225,8 @@ The interface provides the required structures and internal tables to the Adobe 
 
 <div align="center">
 
-<img
-  src="Screenshots/adobe_form_interface.png"
-  alt="Adobe Form Interface"
-  width="900"
-/>
+<img width="1919" height="1134" alt="Screenshot 2026-09-17 155132" src="https://github.com/user-attachments/assets/5d38cff8-76b7-47ea-9701-d69bff790089" />
+
 
 <br><br>
 
@@ -261,11 +258,8 @@ The form layout is designed to support dynamic Purchase Order information includ
 
 <div align="center">
 
-<img
-  src="Screenshots/adobe_form_layout.png"
-  alt="Adobe Form Layout"
-  width="900"
-/>
+<img width="1916" height="1125" alt="Screenshot 2026-09-17 155314" src="https://github.com/user-attachments/assets/ec2ae536-010f-435c-aa28-625ccbd9e6fe" />
+
 
 <br><br>
 
@@ -291,11 +285,7 @@ mechanism for retrieving the generated PDF document.
 
 <div align="center">
 
-<img
-  src="Screenshots/rap_odata.png"
-  alt="RAP OData V4 Service"
-  width="900"
-/>
+
 
 <br><br>
 
@@ -315,11 +305,7 @@ The final output is a dynamically generated Purchase Order PDF created using SAP
 
 <div align="center">
 
-<img
-  src="Screenshots/purchase_order_output.png"
-  alt="Generated Purchase Order PDF"
-  width="900"
-/>
+<img width="691" height="889" alt="image (1)" src="https://github.com/user-attachments/assets/7386d272-43b2-4582-9699-9dc669f95710" />
 
 <br><br>
 
@@ -382,46 +368,7 @@ and extend.
 
 <hr>
 
-<h2>📂 Repository Structure</h2>
 
-<pre>
-📦 SAP-Adobe-Forms-PO-PDF-Automation-RAP
-│
-├── 📁 ABAP
-│   ├── Z_PO_DRIVER.abap
-│   ├── ZCL_PO_PDF_GENERATOR.abap
-│   └── ZCL_PO_PDF_URL.abap
-│
-├── 📁 CDS
-│   ├── ZI_PO_HEADER.ddls.asddls
-│   ├── ZI_PO_ITEM.ddls.asddls
-│   └── ZC_PO.ddls.asddls
-│
-├── 📁 RAP
-│   ├── Behavior_Definition.txt
-│   ├── Behavior_Implementation.txt
-│   ├── Service_Definition.txt
-│   └── Service_Binding.txt
-│
-├── 📁 Adobe_Form
-│   ├── Form_Interface.txt
-│   ├── Form_Context.txt
-│   └── Layout_Structure.txt
-│
-├── 📁 Screenshots
-│   ├── adobe_form_interface.png
-│   ├── adobe_form_layout.png
-│   ├── rap_odata.png
-│   └── purchase_order_output.png
-│
-├── 📁 docs
-│   ├── Architecture.md
-│   └── Project_Flow.md
-│
-└── 📄 README.md
-</pre>
-
-<hr>
 
 <h2>🧩 Main Components</h2>
 
